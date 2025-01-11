@@ -1,3 +1,4 @@
 public class Player {
-    protected int[] location = {50,50};
+    public int x = 0;
+    public int y = 0;
 }

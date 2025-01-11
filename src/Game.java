@@ -7,8 +7,10 @@ import java.util.ArrayList;
 
 public class Game extends JFrame implements ActionListener {
     private ArrayList<Bullet> bullets;
+    private Player player;
 
     public Game() {
+        player = new Player();
         setSize(400, 300);
         setVisible(true);
 
@@ -23,7 +25,23 @@ public class Game extends JFrame implements ActionListener {
     class TAdapter extends KeyAdapter {
         public void keyPressed(KeyEvent e) {
             int keycode = e.getKeyCode();
-            System.out.println(keycode + "");
+            switch(keycode){
+                case KeyEvent.VK_UP :
+                    player.y += 1;
+                    break;
+                case KeyEvent.VK_DOWN:
+                    player.y -= 1;
+                    break;
+                case KeyEvent.VK_RIGHT:
+                    player.x += 1;
+                    break;
+                case KeyEvent.VK_LEFT:
+                    player.x -= 1;
+                    break;
+
+            }
+
+            System.out.println(player.x + ", " + player.y);
         }
     }
 }
