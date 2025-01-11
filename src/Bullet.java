@@ -1,26 +1,33 @@
 import java.util.Random;
 
 public class Bullet {
-    protected int[][] bullet_map = new int[99][99];
-    public Bullet() {
-        for (int i = 0; i < 99; i++) {
-            for (int j = 0; j < 99; j++) {
-                bullet_map[i][j] = 0;
-            }
-        }
-    }
+    int x;
+    int y;
+    int dir;
+
     private void New_Bullet() {
         Random random = new Random ();
-        for (int i = 0; i < 4; i++) {
-            if(i == 0){
-                bullet_map[random.nextInt(98)][0] = 1;
-            }else if(i == 1){
-                bullet_map[random.nextInt(98)][98] = 2;
-            }else if(i == 2){
-                bullet_map[0][random.nextInt(98)] = 3;
-            }else if(i == 3){
-                bullet_map[98][random.nextInt(98)] = 4;
-            }
+        int i = random.nextInt(4);
+        if(i == 0){ //위에서 내려오는놈
+            x = random.nextInt(98);
+            y = 0;
+            dir = 1;
+        }else if(i == 1){
+            x = random.nextInt(98);
+            y = 98;
+            dir = 2;
+        }else if(i == 2){
+            x = 0;
+            y = random.nextInt(98);
+            dir = 3;
+        }else if(i == 3){
+            x = 98;
+            y = random.nextInt(98);
+            dir = 4;
         }
+    }
+
+    private void Move_Bullet() {
+
     }
 }
