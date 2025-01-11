@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 public class Game extends JFrame implements ActionListener {
+    private int GRID_SIZE = 99;
     private ArrayList<Bullet> bullets;
     private Player player;
 
