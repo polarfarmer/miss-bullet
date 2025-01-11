@@ -12,15 +12,14 @@ public class Bullet {
     private void New_Bullet() {
         Random random = new Random ();
         for (int i = 0; i < 4; i++) {
-            int new_locate = random.nextInt(100);
             if(i == 0){
-                bullet_map[new_locate][0] = 1;
+                bullet_map[random.nextInt(100)][0] = 1;
             }else if(i == 1){
-                bullet_map[new_locate][98] = 2;
+                bullet_map[random.nextInt(100)][98] = 2;
             }else if(i == 2){
-                bullet_map[0][new_locate] = 3;
+                bullet_map[0][random.nextInt(100)] = 3;
             }else if(i == 3){
-                bullet_map[98][new_locate] = 4;
+                bullet_map[98][random.nextInt(100)] = 4;
             }
         }
     }
