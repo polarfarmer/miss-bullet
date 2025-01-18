@@ -6,6 +6,9 @@ public class Bullet  {
     int dir;
     int BT;
     int speed = 5;
+    int range;
+    boolean damage = false;
+    Player player = new Player();
 
     public Bullet(int bullet_type) {
         Random random = new Random ();
@@ -13,6 +16,8 @@ public class Bullet  {
         if (bullet_type==1 || bullet_type==2) { //기본 탄막과 큰 탄막
             if (bullet_type==1) {
                 BT = 1;
+                range = 20;
+                damage = true;
             }
             if (bullet_type==2) {
                 BT = 2;
@@ -62,6 +67,10 @@ public class Bullet  {
     }
 
     public void Interact() {
-
+        for (int i = x-20; i < x+20; i++) {
+            if (i == player.x && damage) {
+                System.out.println("game out");
+            }
+        }
     }
 }
