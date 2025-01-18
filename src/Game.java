@@ -22,8 +22,8 @@ public class Game extends JFrame implements ActionListener {
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-    score ++;
-    System.out.println(score);
+        score++;
+        System.out.println(score);
     }
 
     class TAdapter extends KeyAdapter {
