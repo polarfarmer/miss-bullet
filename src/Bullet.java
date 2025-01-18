@@ -1,15 +1,10 @@
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Random;
-import javax.swing.*;
 
-public class Bullet implements ActionListener {
+public class Bullet  {
     int x;
     int y;
     int dir;
     int BT;
-    private Timer timer;
-    int time = 0;
 
     private void New_Bullet(int bullet_type) {
         Random random = new Random ();
@@ -43,29 +38,5 @@ public class Bullet implements ActionListener {
                 dir = 2;
             }
         }
-    }
-
-    private void Common_Bullet() {
-        if(dir==1) {
-            y++;
-        }
-        if(dir==2) {
-            y--;
-        }
-        if(dir==3) {
-            x++;
-        }
-        if(dir==4) {
-            x--;
-        }
-    }
-    private void Beam() {
-        timer = new Timer(1000, this);
-        timer.start();
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        time += timer.getDelay() / 1000;
     }
 }
