@@ -9,7 +9,7 @@ public class Bullet  {
     public Bullet(int bullet_type) {
         Random random = new Random ();
         int i = random.nextInt(4);
-        if (bullet_type==1 || bullet_type==2) {
+        if (bullet_type==1 || bullet_type==2) { //기본 탄막과 큰 탄막
             if (bullet_type==1) {
                 BT = 1;
             }
@@ -33,7 +33,7 @@ public class Bullet  {
                 y = random.nextInt(Game.GRID_SIZE);
                 dir = 4;
             }
-        }else if(bullet_type==3){
+        }else if(bullet_type==3){ //빔   
             BT = 3;
             if(i == 0 || i == 1){
                 x = random.nextInt(Game.GRID_SIZE);
