@@ -5,6 +5,7 @@ public class Bullet  {
     int y;
     int dir;
     int BT;
+    public int radius = 5;
     int speed = 5;
     int range;
     boolean damage = false;

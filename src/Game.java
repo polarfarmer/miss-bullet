@@ -48,16 +48,16 @@ public class Game extends JFrame implements ActionListener {
             int keycode = e.getKeyCode();
             switch(keycode){
                 case KeyEvent.VK_UP :
-                    player.y += 1;
+                    player.Move_Player(1);
                     break;
                 case KeyEvent.VK_DOWN:
-                    player.y -= 1;
+                    player.Move_Player(2);
                     break;
                 case KeyEvent.VK_RIGHT:
-                    player.x += 1;
+                    player.Move_Player(3);
                     break;
                 case KeyEvent.VK_LEFT:
-                    player.x -= 1;
+                    player.Move_Player(4);
                     break;
             }
 
@@ -67,11 +67,12 @@ public class Game extends JFrame implements ActionListener {
 
     public void paint(Graphics g) {
         super.paint(g);
-        int bulletRadius = 10;
         g.setColor(Color.MAGENTA);
-
         for (Bullet bullet : bullets) {
-            g.fillOval(bullet.x - bulletRadius, bullet.y + bulletRadius, bulletRadius * 2, bulletRadius * 2);
+            g.fillOval(bullet.x - bullet.radius, bullet.y - bullet.radius, bullet.radius * 2, bullet.radius * 2);
         }
+
+        g.setColor(Color.BLACK);
+        g.fillOval(player.x - player.raduis, player.y - player.raduis, player.raduis * 2, player.raduis * 2);
     }
 }
