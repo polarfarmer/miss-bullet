@@ -40,7 +40,7 @@ public class Bullet  {
                 y = random.nextInt(Game.FrameSizeY);
                 dir = 4;
             }
-        }else if(bullet_type==3){ //빔   
+        }else if(bullet_type==3){ //빔
             BT = 3;
             if(i == 0 || i == 1){
                 x = random.nextInt(Game.FrameSizeX);
@@ -67,7 +67,14 @@ public class Bullet  {
         }
     }
 
-    public void Interact() {
+    public boolean Interact() {
+        boolean isInteract = false;
+        double distance = Math.sqrt(Math.pow(Game.player.x - x, 2) + Math.pow(Game.player.y - y, 2));
 
+        if (distance <= player.raduis + radius) {
+            isInteract = true;
+        }
+
+        return isInteract;
     }
 }

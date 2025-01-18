@@ -10,8 +10,8 @@ public class Game extends JFrame implements ActionListener {
     public static int GRID_SIZE = 99;
     public static int FrameSizeX = 400;
     public static int FrameSizeY = 300;
+    public static Player player;
     private ArrayList<Bullet> bullets = new ArrayList<>();
-    private Player player;
     private Timer timer;
     private int score = 0;
 
@@ -33,37 +33,46 @@ public class Game extends JFrame implements ActionListener {
     }
     @Override
     public void actionPerformed(ActionEvent e) {
+        if(player.dead)
+            return;
+
         score++;
         for (Bullet bullet : bullets) {
             bullet.Move();
+            if (bullet.Interact()) {
+                player.die();
+            }
         }
         FrameSizeX = getWidth();
         FrameSizeY = getHeight();
         if (score < 200 && score % 10 == 0) { //2
             bullets.add(new Bullet(1));
-        }else if(score < 400 && score % 8 == 0){ //2.5
+        }else if(score >= 200 && score < 400 && score % 8 == 0){ //2.5
             bullets.add(new Bullet(1));
-        }else if(score < 600 && score % 6 == 0){ //3.333...
+        }else if(score >= 400 && score < 600 && score % 6 == 0){ //3.333...
             bullets.add(new Bullet(1));
-        }else if(score < 800 && score % 5 == 0){ //4
+        }else if(score >= 600 && score < 800 && score % 5 == 0){ //4
             bullets.add(new Bullet(1));
-        }else if(score < 1000 && score % 4 == 0){ //5
+        }else if(score >= 800 && score < 1000 && score % 4 == 0){ //5
             bullets.add(new Bullet(1));
-        }else if(score < 1200 && score % 3 == 0){ //6.666...
+        }else if(score >= 1000 && score < 1200 && score % 3 == 0){ //6.666...
             bullets.add(new Bullet(1));
-        }else if(score < 1400 && score % 3 == 0){ //8.666...
+        }else if(score >= 1200 && score < 1400 && score % 3 == 0){ //8.666...
             bullets.add(new Bullet(1));
             if(score % 4 == 0){
                 bullets.add(new Bullet(1));
             }
-        }else if(score < 1600 && score % 2 == 0) { //10
+        }else if(score >= 1400 && score < 1600 && score % 2 == 0) { //10
             bullets.add(new Bullet(1));
-        }else if(score < 1800 && score % 2 == 0) {
+        }else if(score >= 1600 && score < 1800 && score % 2 == 0) {
             bullets.add(new Bullet(1));//15
             if(score % 4 == 0){
                 bullets.add(new Bullet(1));
             }
-        }else if(score < 2000 && score % 2 == 0) { //20
+        }else if(score >= 1800 && score < 2000 && score % 2 == 0) { //20
+            bullets.add(new Bullet(1));
+        }else if(score >= 2000 && score % 2 == 0){
+            bullets.add(new Bullet(1));
             bullets.add(new Bullet(1));
         }
         repaint();
@@ -86,6 +95,9 @@ public class Game extends JFrame implements ActionListener {
                     player.Move_Player(4);
                     break;
             }
+
+            System.out.println(player.x + ", " + player.y);
+            System.out.println(bullets.getFirst().Interact());
         }
     }
 
