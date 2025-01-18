@@ -15,5 +15,7 @@ public class InteractBullet
                 x--;
             }
         }
+
+        return 0;
     }
 }
