@@ -35,9 +35,15 @@ public class Game extends JFrame implements ActionListener {
     }
     @Override
     public void actionPerformed(ActionEvent e) {
+        if(player.dead)
+            return;
+
         score++;
         for (Bullet bullet : bullets) {
-//            bullet.Move();
+            bullet.Move();
+            if (bullet.Interact()) {
+                player.die();
+            }
         }
         FrameSizeX = getWidth();
         FrameSizeY = getHeight();
