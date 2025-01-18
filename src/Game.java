@@ -19,7 +19,7 @@ public class Game extends JFrame implements ActionListener {
 
     public Game() {
         player = new Player();
-        timer = new Timer(70,this);
+        timer = new Timer(50,this);
         timer.start();
         addKeyListener(new TAdapter());
 
