@@ -68,10 +68,6 @@ public class Bullet  {
     }
 
     public void Interact() {
-        for (int i = x-player.raduis+radius; i < x+player.raduis+radius; i++) {
-            if (i == player.x) {
-                System.out.println("game out");
-            }
-        }
+
     }
 }
