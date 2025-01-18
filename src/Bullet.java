@@ -5,7 +5,7 @@ public class Bullet  {
     int y;
     int dir;
     int BT;
-    public int radius = 5;
+    public int radius = 20;
     int speed = 5;
     int range;
     boolean damage = false;
@@ -67,11 +67,14 @@ public class Bullet  {
         }
     }
 
-    public void Interact() {
-        for (int i = x-player.raduis+radius; i < x+player.raduis+radius; i++) {
-            if (i == player.x) {
-                System.out.println("game out");
-            }
+    public boolean Interact() {
+        boolean isInteract = false;
+        double distance = Math.sqrt(Math.pow(Game.player.x - x, 2) + Math.pow(Game.player.y - y, 2));
+
+        if (distance <= player.raduis + radius) {
+            isInteract = true;
         }
+
+        return isInteract;
     }
 }

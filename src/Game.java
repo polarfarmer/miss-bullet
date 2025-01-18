@@ -10,8 +10,8 @@ public class Game extends JFrame implements ActionListener {
     public static int GRID_SIZE = 99;
     public static int FrameSizeX = 400;
     public static int FrameSizeY = 300;
+    public static Player player;
     private ArrayList<Bullet> bullets = new ArrayList<>();
-    private Player player;
     private Timer timer;
     private int score = 0;
 
@@ -27,6 +27,8 @@ public class Game extends JFrame implements ActionListener {
         gamePanel = new JPanel();
         add(gamePanel);
 
+        bullets.add(new Bullet(1));
+
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         repaint();
@@ -35,11 +37,10 @@ public class Game extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         score++;
         for (Bullet bullet : bullets) {
-            bullet.Move();
+//            bullet.Move();
         }
         FrameSizeX = getWidth();
         FrameSizeY = getHeight();
-        bullets.add(new Bullet(1));
         repaint();
     }
 
@@ -62,6 +63,7 @@ public class Game extends JFrame implements ActionListener {
             }
 
             System.out.println(player.x + ", " + player.y);
+            System.out.println(bullets.getFirst().Interact());
         }
     }
 

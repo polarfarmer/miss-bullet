@@ -1,7 +1,7 @@
 public class Player {
     public int x = 0;
     public int y = 0;
-    public int raduis = 5;
+    public int raduis = 30;
     private int speed = 5;
 
     public void Move_Player(int dir) {
