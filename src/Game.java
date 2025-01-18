@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 public class Game extends JFrame implements ActionListener {
     public static int GRID_SIZE = 99;
+    public static int FrameSizeX = 400;
+    public static int FrameSizeY = 300;
     private ArrayList<Bullet> bullets = new ArrayList<>();
     private Player player;
     private Timer timer;
@@ -17,23 +19,28 @@ public class Game extends JFrame implements ActionListener {
 
     public Game() {
         player = new Player();
-        timer = new Timer(1000,this);
+        timer = new Timer(70,this);
         timer.start();
         addKeyListener(new TAdapter());
-
-        bullets.add(new Bullet(1));
 
         setSize(400, 300);
         gamePanel = new JPanel();
         add(gamePanel);
 
         setVisible(true);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
         repaint();
     }
     @Override
     public void actionPerformed(ActionEvent e) {
         score++;
-        System.out.println(score);
+        for (Bullet bullet : bullets) {
+            bullet.Move();
+        }
+        FrameSizeX = getWidth();
+        FrameSizeY = getHeight();
+        bullets.add(new Bullet(1));
+        repaint();
     }
 
     class TAdapter extends KeyAdapter {
@@ -52,7 +59,6 @@ public class Game extends JFrame implements ActionListener {
                 case KeyEvent.VK_LEFT:
                     player.x -= 1;
                     break;
-
             }
 
             System.out.println(player.x + ", " + player.y);
@@ -61,7 +67,7 @@ public class Game extends JFrame implements ActionListener {
 
     public void paint(Graphics g) {
         super.paint(g);
-        int bulletRadius = 5;
+        int bulletRadius = 10;
         g.setColor(Color.MAGENTA);
 
         for (Bullet bullet : bullets) {
