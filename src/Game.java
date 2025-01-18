@@ -9,18 +9,21 @@ public class Game extends JFrame implements ActionListener {
     private int GRID_SIZE = 99;
     private ArrayList<Bullet> bullets;
     private Player player;
-
+    private Timer timer;
+    private int score = 0;
     public Game() {
         player = new Player();
         setSize(400, 300);
         setVisible(true);
+        timer = new Timer(1000,this);
+        timer.start();
 
         addKeyListener(new TAdapter());
     }
-
     @Override
     public void actionPerformed(ActionEvent e) {
-
+    score ++;
+    System.out.println(score);
     }
 
     class TAdapter extends KeyAdapter {
