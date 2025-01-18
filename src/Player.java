@@ -1,19 +1,21 @@
 public class Player {
     public int x = 0;
     public int y = 0;
+    public int raduis = 5;
+    private int speed = 3;
 
     public void Move_Player(int dir) {
         if(dir==1) {
-            y++;
+            y -= speed;
         }
         else if(dir==2) {
-            y--;
+            y += speed;
         }
         else if(dir==3) {
-            x++;
+            x += speed;
         }
         else if(dir==4) {
-            x--;
+            x -= speed;
         }
     }
 }

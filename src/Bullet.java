@@ -5,6 +5,7 @@ public class Bullet  {
     int y;
     int dir;
     int BT;
+    public int radius = 5;
     int speed = 5;
 
     public Bullet(int bullet_type) {
