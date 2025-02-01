@@ -3,66 +3,57 @@ import java.util.Random;
 public class Bullet  {
     int x;
     int y;
-    int dir;
-    int BT;
-    public int radius = 5;
-    int speed = 5;
-    int range;
-    boolean damage = false;
-    Player player = new Player();
+    Main.Direction dir;
+    public boolean dead = false;
 
-    public Bullet(int bullet_type) {
+    public int radius = 5;
+    int speed;
+    Player player = Game.player;
+
+    public Bullet(int type) {
         Random random = new Random ();
-        int i = random.nextInt(4);
-        if (bullet_type==1 || bullet_type==2) { //기본 탄막과 큰 탄막
-            if (bullet_type==1) {
-                BT = 1;
-                range = 20;
-                damage = true;
-            }
-            if (bullet_type==2) {
-                BT = 2;
-            }
-            if(i == 0){ //v
-                x = random.nextInt(Game.FrameSizeX);
-                y = 0;
-                dir = 1;
-            }else if(i == 1){ //^
-                x = random.nextInt(Game.FrameSizeX);
-                y = Game.FrameSizeY;
-                dir = 2;
-            }else if(i == 2){//>
-                x = 0;
-                y = random.nextInt(Game.FrameSizeY);
-                dir = 3;
-            }else if(i == 3){//<
-                x = Game.FrameSizeX;
-                y = random.nextInt(Game.FrameSizeY);
-                dir = 4;
-            }
-        }else if(bullet_type==3){ //빔
-            BT = 3;
-            if(i == 0 || i == 1){
-                x = random.nextInt(Game.FrameSizeX);
-                dir = 1;
-            }else if(i == 2 || i == 3){
-                y = random.nextInt(Game.FrameSizeY);
-                dir = 2;
-            }
+        Main.Direction dir = Main.Direction.values()[random.nextInt(Main.Direction.values().length)];
+
+        switch (type) {
+            case 0:
+                speed = 6;
+            case 1:
+                speed = 10;
+        }
+
+        if(dir == Main.Direction.UP){
+            x = random.nextInt(Game.FrameSizeWidth);
+            y = 0;
+            this.dir = dir;
+        }else if(dir == Main.Direction.DOWN){
+            x = random.nextInt(Game.FrameSizeWidth);
+            y = Game.FrameSizeHeight;
+            this.dir = dir;
+        }else if(dir == Main.Direction.LEFT){
+            x = 0;
+            y = random.nextInt(Game.FrameSizeHeight);
+            this.dir = dir;
+        }else if(dir == Main.Direction.RIGHT){
+            x = Game.FrameSizeWidth;
+            y = random.nextInt(Game.FrameSizeHeight);
+            this.dir = dir;
         }
     }
 
     public void Move() {
-        if(dir==1) {
+        if (dead)
+            return;
+
+        if(dir == Main.Direction.UP) {
             y += speed;
         }
-        if(dir==2) {
+        else if(dir == Main.Direction.DOWN) {
             y -= speed;
         }
-        if(dir==3) {
+        else if(dir == Main.Direction.LEFT) {
             x += speed;
         }
-        if(dir==4) {
+        else if(dir == Main.Direction.RIGHT) {
             x -= speed;
         }
     }
@@ -71,10 +62,14 @@ public class Bullet  {
         boolean isInteract = false;
         double distance = Math.sqrt(Math.pow(Game.player.x - x, 2) + Math.pow(Game.player.y - y, 2));
 
-        if (distance <= player.raduis + radius) {
+        if (distance <= player.radius + radius) {
             isInteract = true;
         }
 
         return isInteract;
+    }
+
+    public void die() {
+        dead = true;
     }
 }

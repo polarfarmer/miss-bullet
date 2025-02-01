@@ -5,77 +5,100 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Random;
 
 public class Game extends JFrame implements ActionListener {
-    public static int GRID_SIZE = 99;
-    public static int FrameSizeX = 400;
-    public static int FrameSizeY = 300;
+    public static int FrameSizeWidth = 800;
+    public static int FrameSizeHeight = 600;
+    private final int delay = 50;
+
     public static Player player;
     private ArrayList<Bullet> bullets = new ArrayList<>();
     private Timer timer;
+    private Random random = new Random();
     private int score = 0;
+    private int wave = 0;
+    private int timeCount = 0;
+    private int bulletSpawnTime = 1000;
 
     private JPanel gamePanel;
+    private JLabel textLabel;
+    private JLabel overLabel;
 
     public Game() {
         player = new Player();
-        timer = new Timer(50,this);
+        timer = new Timer(delay,this);
         timer.start();
         addKeyListener(new TAdapter());
 
-        setSize(400, 300);
+        setSize(FrameSizeWidth, FrameSizeHeight);
         gamePanel = new JPanel();
+        gamePanel.setLayout(new BorderLayout());
         add(gamePanel);
+
+        textLabel = new JLabel("score: 0 wave: 0");
+        textLabel.setFont(new Font("Times", Font.PLAIN, 20));
+        textLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        gamePanel.add(textLabel, BorderLayout.NORTH);
+
+        overLabel = new JLabel("Game Over!");
+        overLabel.setVisible(false);
+        overLabel.setFont(new Font("Times", Font.BOLD, 70));
+        overLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        gamePanel.add(overLabel, BorderLayout.CENTER);
 
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setResizable(false);
         repaint();
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(player.dead)
-            return;
+        if(player.dead){
+            timer.stop();
+            overLabel.setVisible(true);
+        }
+        timeCount++;
 
-        score++;
-        for (Bullet bullet : bullets) {
+        if (timeCount % (1000 / delay) == 0) {//1초에 실행
+            score++;
+        }
+
+        if (timeCount % (5000 / delay) == 0) {//5초에 실행
+            wave++;
+            bulletSpawnTime = Math.max(bulletSpawnTime - 100, 100);
+        }
+
+        if (timeCount % (bulletSpawnTime / delay) == 0) {//총알 생성
+            int rand = random.nextInt(10);
+
+            if (rand == 0) {
+                bullets.add(new Bullet(1));
+            }
+            else {
+                bullets.add(new Bullet(0));
+            }
+        }
+
+        for (int i = 0; i < bullets.size(); i++) {
+            Bullet bullet = bullets.get(i);
+
             bullet.Move();
             if (bullet.Interact()) {
                 player.die();
             }
-        }
-        FrameSizeX = getWidth();
-        FrameSizeY = getHeight();
-        if (score < 200 && score % 10 == 0) { //2
-            bullets.add(new Bullet(1));
-        }else if(score >= 200 && score < 400 && score % 8 == 0){ //2.5
-            bullets.add(new Bullet(1));
-        }else if(score >= 400 && score < 600 && score % 6 == 0){ //3.333...
-            bullets.add(new Bullet(1));
-        }else if(score >= 600 && score < 800 && score % 5 == 0){ //4
-            bullets.add(new Bullet(1));
-        }else if(score >= 800 && score < 1000 && score % 4 == 0){ //5
-            bullets.add(new Bullet(1));
-        }else if(score >= 1000 && score < 1200 && score % 3 == 0){ //6.666...
-            bullets.add(new Bullet(1));
-        }else if(score >= 1200 && score < 1400 && score % 3 == 0){ //8.666...
-            bullets.add(new Bullet(1));
-            if(score % 4 == 0){
-                bullets.add(new Bullet(1));
+            if (Main.IsFrameOut(bullet.x, bullet.y)) {
+                bullet.die();
+                bullets.remove(i);
+                i--;
             }
-        }else if(score >= 1400 && score < 1600 && score % 2 == 0) { //10
-            bullets.add(new Bullet(1));
-        }else if(score >= 1600 && score < 1800 && score % 2 == 0) {
-            bullets.add(new Bullet(1));//15
-            if(score % 4 == 0){
-                bullets.add(new Bullet(1));
-            }
-        }else if(score >= 1800 && score < 2000 && score % 2 == 0) { //20
-            bullets.add(new Bullet(1));
-        }else if(score >= 2000 && score % 2 == 0){
-            bullets.add(new Bullet(1));
-            bullets.add(new Bullet(1));
         }
+
+        FrameSizeWidth = getWidth();
+        FrameSizeHeight = getHeight();
         repaint();
+        textLabel.setText("score: " + score + " wave: " + wave);
     }
 
     class TAdapter extends KeyAdapter {
@@ -83,21 +106,18 @@ public class Game extends JFrame implements ActionListener {
             int keycode = e.getKeyCode();
             switch(keycode){
                 case KeyEvent.VK_UP :
-                    player.Move_Player(1);
+                    player.Move_Player(Main.Direction.UP);
                     break;
                 case KeyEvent.VK_DOWN:
-                    player.Move_Player(2);
+                    player.Move_Player(Main.Direction.DOWN);
                     break;
                 case KeyEvent.VK_RIGHT:
-                    player.Move_Player(3);
+                    player.Move_Player(Main.Direction.RIGHT);
                     break;
                 case KeyEvent.VK_LEFT:
-                    player.Move_Player(4);
+                    player.Move_Player(Main.Direction.LEFT);
                     break;
             }
-
-            System.out.println(player.x + ", " + player.y);
-            System.out.println(bullets.getFirst().Interact());
         }
     }
 
@@ -109,6 +129,6 @@ public class Game extends JFrame implements ActionListener {
         }
 
         g.setColor(Color.BLACK);
-        g.fillOval(player.x - player.raduis, player.y - player.raduis, player.raduis * 2, player.raduis * 2);
+        g.fillOval(player.x - player.radius, player.y - player.radius, player.radius * 2, player.radius * 2);
     }
 }
