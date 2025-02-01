@@ -65,13 +65,13 @@ public class Game extends JFrame implements ActionListener {
             score++;
         }
 
-        if (timeCount % (5000 / delay) == 0) {//5초에 실행
+        if (timeCount % (3000 / delay) == 0) {//5초에 실행
             wave++;
             bulletSpawnTime = Math.max(bulletSpawnTime - 100, 100);
         }
 
         if (timeCount % (bulletSpawnTime / delay) == 0) {//총알 생성
-            int rand = random.nextInt(10);
+            int rand = random.nextInt(8);
 
             if (rand == 0) {
                 bullets.add(new Bullet(1));
@@ -123,8 +123,8 @@ public class Game extends JFrame implements ActionListener {
 
     public void paint(Graphics g) {
         super.paint(g);
-        g.setColor(Color.MAGENTA);
         for (Bullet bullet : bullets) {
+            g.setColor(bullet.color);
             g.fillOval(bullet.x - bullet.radius, bullet.y - bullet.radius, bullet.radius * 2, bullet.radius * 2);
         }
 

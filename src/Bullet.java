@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.util.Random;
 
 public class Bullet  {
@@ -8,6 +9,7 @@ public class Bullet  {
 
     public int radius = 5;
     int speed;
+    public Color color;
     Player player = Game.player;
 
     public Bullet(int type) {
@@ -17,8 +19,13 @@ public class Bullet  {
         switch (type) {
             case 0:
                 speed = 6;
+                color = Color.MAGENTA;
+                break;
             case 1:
                 speed = 10;
+                color = Color.RED;
+                radius = 7;
+                break;
         }
 
         if(dir == Main.Direction.UP){
